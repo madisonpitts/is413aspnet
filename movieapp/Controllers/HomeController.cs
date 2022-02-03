@@ -1,23 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using movieapp.Models;
+using System.Linq;
 
 namespace movieapp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        private movieContext _blahContext { get; set; }
+      
+        
+        private movieContext movieContext { get; set; }
 
-        public HomeController(ILogger<HomeController> logger, movieContext someName)
+        public HomeController(movieContext someName)
         {
-            _logger = logger;
-            _blahContext = someName;
+            movieContext = someName;
         }
 
         public IActionResult Index()
@@ -31,22 +27,32 @@ namespace movieapp.Controllers
         }
         public IActionResult Form()
         {
+            ViewBag.categories =  movieContext.categories.ToList();
             return View();
         }
 
         [HttpPost]
         public IActionResult Form(formResponse fr)
         {
-            _blahContext.Add(fr);
-            _blahContext.SaveChanges();
+            movieContext.Add(fr);
+            movieContext.SaveChanges();
 
             return View("Movies", fr);
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [HttpGet]
+        public IActionResult WaitList ()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var movieslist = movieContext.responses
+                .Include(x => x.Category)
+                .OrderBy(x => x.Title)
+                .ToList();
+
+            return View(movieslist);
         }
+
+   
+
+
     }
 }

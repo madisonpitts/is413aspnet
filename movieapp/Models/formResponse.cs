@@ -14,10 +14,9 @@ namespace movieapp.Models
     {
         [Key]
         [Required]
-        public int MovieID { get; set; }
+        public int MovieNumber { get; set; }
 
-        [Required]
-        public string Category { get; set; }
+        
 
         [Required]
         public string Title { get; set; }
@@ -39,6 +38,11 @@ namespace movieapp.Models
 
         [MaxLength(25)]
         public string Notes { get; set; }
-        
+
+        [Required]
+        public int CategoryNumber { get; set; }
+        // build foreign key relationship
+        public Category Category { get; set; }
+
     }
 }
