@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewData["Title"] = "Wait List";
+    ViewData["Title"] = "Movie List";
 }
 @model List<formResponse>
 <table class="table table-bordered table-striped">
@@ -22,7 +22,7 @@
             @foreach (var x in Model)
             {
                 <tr>
-                    <td>@x.Category.CategoryNumber</td>
+                    <td>@x.CategoryNumber</td>
                     <td>@x.Title</td>
                     <td>@x.Year</td>
                     <td>@x.Director</td>
@@ -30,6 +30,9 @@
                     <td>@x.Edited</td>
                     <td>@x.LentTo</td>
                     <td>@x.Notes</td>
+
+                    <td><a asp-controller="Home" asp-action="Edit" asp-route-id="@x.MovieNumber">Edit</a></td>
+                    <td><a asp-controller="Home" asp-action="Delete" asp-route-id="@x.MovieNumber">Delete</a></td>
                 </tr>
             }
         </tbody>

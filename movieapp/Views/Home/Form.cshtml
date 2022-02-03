@@ -8,12 +8,13 @@
 
 <div class="text-center">
     <form method="post">
+        <div class="text-center" asp-validation-summary="All"></div>
         <label asp-for="CategoryNumber">Category: </label>
         <select asp-for="CategoryNumber">
             <option value="">Select a Category</option>
             @foreach (Category c in ViewBag.categories)
             {
-                <option value="@c.CategoryName">@c.CategoryName</option>
+                <option value="@c.CategoryNumber">@c.CategoryName</option>
             }
         </select>
         <br />
@@ -47,6 +48,6 @@
         <textarea asp-for="Notes" rows="2"></textarea>
         <br />
         <br />
-        <button type="submit">Add Movie</button>
+        <button type="submit">Submit Movie</button>
     </form>
 </div>

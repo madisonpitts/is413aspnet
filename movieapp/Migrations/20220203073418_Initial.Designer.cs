@@ -9,7 +9,7 @@ using movieapp.Models;
 namespace movieapp.Migrations
 {
     [DbContext(typeof(movieContext))]
-    [Migration("20220203060544_Initial")]
+    [Migration("20220203073418_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,56 +20,56 @@ namespace movieapp.Migrations
 
             modelBuilder.Entity("movieapp.Models.Category", b =>
                 {
-                    b.Property<int>("CategoryId")
+                    b.Property<int>("CategoryNumber")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("CategoryName")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("CategoryId");
+                    b.HasKey("CategoryNumber");
 
                     b.ToTable("categories");
 
                     b.HasData(
                         new
                         {
-                            CategoryId = 1,
+                            CategoryNumber = 1,
                             CategoryName = "Action/Adventure"
                         },
                         new
                         {
-                            CategoryId = 2,
+                            CategoryNumber = 2,
                             CategoryName = "Comedy"
                         },
                         new
                         {
-                            CategoryId = 3,
+                            CategoryNumber = 3,
                             CategoryName = "Drama"
                         },
                         new
                         {
-                            CategoryId = 4,
+                            CategoryNumber = 4,
                             CategoryName = "Family"
                         },
                         new
                         {
-                            CategoryId = 5,
+                            CategoryNumber = 5,
                             CategoryName = "Horror/Suspense"
                         },
                         new
                         {
-                            CategoryId = 6,
+                            CategoryNumber = 6,
                             CategoryName = "Miscellaneous"
                         },
                         new
                         {
-                            CategoryId = 7,
+                            CategoryNumber = 7,
                             CategoryName = "Television"
                         },
                         new
                         {
-                            CategoryId = 8,
+                            CategoryNumber = 8,
                             CategoryName = "VHS"
                         });
                 });
@@ -80,10 +80,10 @@ namespace movieapp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("CategoryId")
+                    b.Property<int>("CategoryNumber")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("CategoryNumber")
+                    b.Property<int?>("CategoryNumber1")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Director")
@@ -114,7 +114,7 @@ namespace movieapp.Migrations
 
                     b.HasKey("MovieNumber");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("CategoryNumber1");
 
                     b.ToTable("responses");
 
@@ -161,7 +161,7 @@ namespace movieapp.Migrations
                 {
                     b.HasOne("movieapp.Models.Category", "Category")
                         .WithMany()
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryNumber1");
                 });
 #pragma warning restore 612, 618
         }

@@ -34,14 +34,22 @@ namespace movieapp.Controllers
         [HttpPost]
         public IActionResult Form(formResponse fr)
         {
-            movieContext.Add(fr);
-            movieContext.SaveChanges();
+            if (ModelState.IsValid)
+            {
+                movieContext.Add(fr);
+                movieContext.SaveChanges();
 
-            return View("Movies", fr);
+                return View("Movies", fr);
+            }
+            else
+            {
+                ViewBag.categories = movieContext.categories.ToList();
+                return View(fr);
+            }
         }
 
         [HttpGet]
-        public IActionResult WaitList ()
+        public IActionResult MovieList ()
         {
             var movieslist = movieContext.responses
                 .Include(x => x.Category)
@@ -50,8 +58,35 @@ namespace movieapp.Controllers
 
             return View(movieslist);
         }
+        [HttpGet]
+        public IActionResult Edit (int id)
+        {
+            ViewBag.categories = movieContext.categories.ToList();
 
-   
+            var movie = movieContext.responses.Single(x => x.MovieNumber == id);
+            return View("Form", movie);
+        }
+
+        [HttpPost]
+        public IActionResult Edit (formResponse x)
+        {
+            movieContext.Update(x);
+            movieContext.SaveChanges();
+            return RedirectToAction("MovieList");
+        }
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var movie = movieContext.responses.Single(x => x.MovieNumber == id);
+            return View(movie);
+        }
+        [HttpPost]
+        public IActionResult Delete(formResponse fr)
+        {
+            movieContext.responses.Remove(fr);
+            movieContext.SaveChanges();
+            return RedirectToAction("MovieList");
+        }
 
 
     }

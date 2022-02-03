@@ -13,7 +13,7 @@ namespace movieapp.Models
     {
         [Key]
         [Required]
-        public int CategoryId { get; set; }
+        public int CategoryNumber { get; set; }
         public string CategoryName { get; set; }
 
 
